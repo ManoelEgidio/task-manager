@@ -1,0 +1,135 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Minhas Tarefas</h1>
+      <p class="page-subtitle">Gerencie suas atividades diárias com facilidade e produtividade</p>
+    </div>
+    <button mat-raised-button color="primary" class="add-task-btn" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      <span>Nova Tarefa</span>
+    </button>
+  </div>
+
+  <app-task-metrics
+    [totalTasks]="totalCount()"
+    [pendingCount]="pendingCount()"
+    [completedCount]="completedCount()"
+  ></app-task-metrics>
+
+  <div class="control-bar-card">
+    <mat-form-field appearance="outline" class="control-field search-field">
+      <mat-label>Pesquisar tarefas...</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Digite um título ou descrição" />
+      <mat-icon matPrefix color="action">search</mat-icon>
+      @if (searchControl.value) {
+        <button mat-icon-button matSuffix (click)="searchControl.setValue('')">
+          <mat-icon>clear</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    <div class="filter-select-wrapper">
+      <mat-form-field appearance="outline" class="control-field select-field">
+        <mat-label>Status</mat-label>
+        <mat-select [value]="activeFilter()" (selectionChange)="onFilterChange($event.value)">
+          <mat-option value="ALL">Todas ({{ totalCount() }})</mat-option>
+          <mat-option value="PENDING">Pendentes ({{ pendingCount() }})</mat-option>
+          <mat-option value="COMPLETED">Concluídas ({{ completedCount() }})</mat-option>
+        </mat-select>
+        <mat-icon matPrefix color="action">filter_list</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="control-field select-field">
+        <mat-label>Ordenar por</mat-label>
+        <mat-select [value]="sortKey()" (selectionChange)="onSortChange($event.value)">
+          <mat-option value="id,desc">Mais recentes</mat-option>
+          <mat-option value="id,asc">Mais antigas</mat-option>
+          <mat-option value="title,asc">Título (A-Z)</mat-option>
+          <mat-option value="title,desc">Título (Z-A)</mat-option>
+        </mat-select>
+        <mat-icon matPrefix color="action">sort</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="task-cards-list">
+    @if (loadingService.isLoading() && tasksList().length === 0) {
+      <div class="task-skeleton-card">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text-group">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-desc"></div>
+        </div>
+      </div>
+      <div class="task-skeleton-card">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text-group">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-desc"></div>
+        </div>
+      </div>
+      <div class="task-skeleton-card">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text-group">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-desc"></div>
+        </div>
+      </div>
+    } @else {
+      @for (task of tasksList(); track task.id) {
+        <app-task-card
+          [task]="task"
+          (toggle)="onToggleTask($event)"
+          (edit)="openEditDialog($event)"
+          (delete)="confirmDeleteTask($event)"
+        ></app-task-card>
+      } @empty {
+        <app-empty-state
+          [icon]="searchControl.value || activeFilter() !== 'ALL' ? 'search_off' : 'assignment_late'"
+          [title]="searchControl.value || activeFilter() !== 'ALL' ? 'Nenhum resultado encontrado' : 'Nenhuma tarefa cadastrada'"
+          [description]="searchControl.value || activeFilter() !== 'ALL' ? 'Tente ajustar os filtros de busca para encontrar o que procura.' : 'Clique no botão acima para criar sua primeira tarefa!'"
+        ></app-empty-state>
+      }
+
+      @if (loadingService.isLoading() && tasksList().length > 0) {
+        <div class="task-skeleton-card">
+          <div class="skeleton-checkbox"></div>
+          <div class="skeleton-text-group">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-desc"></div>
+          </div>
+        </div>
+        <div class="task-skeleton-card">
+          <div class="skeleton-checkbox"></div>
+          <div class="skeleton-text-group">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-desc"></div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  @if (!loadingService.isLoading() && hasMoreTasks()) {
+    <div class="load-more-container">
+      <button
+        mat-stroked-button
+        class="load-more-btn"
+        (click)="onLoadMore()"
+      >
+        <div class="load-more-btn-content">
+          <div class="btn-main-label">
+            <mat-icon>expand_more</mat-icon>
+            <span>Carregar mais tarefas</span>
+          </div>
+          <span class="count-pill">Exibindo {{ tasksList().length }} de {{ totalFilteredCount() }}</span>
+        </div>
+      </button>
+    </div>
+  } @else if (!loadingService.isLoading() && tasksList().length > 0) {
+    <div class="all-loaded-footer">
+      <mat-icon class="check-done-icon">task_alt</mat-icon>
+      <span>Você visualizou todas as <strong>{{ totalFilteredCount() }}</strong> tarefas</span>
+    </div>
+  }
+</div>

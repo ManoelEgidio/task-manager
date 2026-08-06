@@ -3,6 +3,7 @@ package br.com.manoelegidio.taskmanager.api.service;
 import br.com.manoelegidio.taskmanager.api.dto.TaskFilterDTO;
 import br.com.manoelegidio.taskmanager.api.dto.TaskRequestDTO;
 import br.com.manoelegidio.taskmanager.api.dto.TaskResponseDTO;
+import br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO;
 import br.com.manoelegidio.taskmanager.api.exception.ResourceNotFoundException;
 import br.com.manoelegidio.taskmanager.api.factory.TaskFactory;
 import br.com.manoelegidio.taskmanager.api.model.Task;
@@ -21,6 +22,14 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskFactory taskFactory;
+
+    @Transactional(readOnly = true)
+    public TaskSummaryDTO getSummary() {
+        long total = taskRepository.count();
+        long pending = taskRepository.countByCompleted(false);
+        long completed = taskRepository.countByCompleted(true);
+        return new TaskSummaryDTO(total, pending, completed);
+    }
 
     @Transactional(readOnly = true)
     public Page<TaskResponseDTO> search(TaskFilterDTO filter, Integer page, Integer size, String sort, String direction) {

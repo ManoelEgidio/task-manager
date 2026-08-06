@@ -56,6 +56,21 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar resumo estatístico das tarefas")
+    void getSummary_ShouldReturnCorrectSummary() {
+        when(taskRepository.count()).thenReturn(10L);
+        when(taskRepository.countByCompleted(false)).thenReturn(6L);
+        when(taskRepository.countByCompleted(true)).thenReturn(4L);
+
+        br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO summary = taskService.getSummary();
+
+        assertThat(summary).isNotNull();
+        assertThat(summary.total()).isEqualTo(10L);
+        assertThat(summary.pending()).isEqualTo(6L);
+        assertThat(summary.completed()).isEqualTo(4L);
+    }
+
+    @Test
     @DisplayName("Deve buscar tarefas com filtro e paginação via search")
     void search_ShouldReturnPagedTasks() {
         Page<Task> page = new PageImpl<>(List.of(sampleTask));

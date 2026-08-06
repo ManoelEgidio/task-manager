@@ -1,0 +1,88 @@
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 540px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .metric-card {
+    border-radius: 16px !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .metric-content {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1rem !important;
+
+      @media (min-width: 768px) {
+        padding: 1.15rem 1.25rem !important;
+      }
+
+      .metric-icon-bg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        flex-shrink: 0;
+
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+
+        &.icon-total { background-color: #e0f2fe; color: #0284c7; }
+        &.icon-pending { background-color: #fef3c7; color: #d97706; }
+        &.icon-completed { background-color: #d1fae5; color: #059669; }
+        &.icon-progress { background-color: #f3e8ff; color: #7c3aed; }
+      }
+
+      .metric-info {
+        display: flex;
+        flex-direction: column;
+
+        .metric-label {
+          font-size: 0.75rem;
+          color: #64748b;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+
+          @media (min-width: 768px) {
+            font-size: 0.825rem;
+          }
+        }
+
+        .metric-value {
+          font-size: 1.35rem;
+          font-weight: 800;
+          color: #0f172a;
+          letter-spacing: -0.03em;
+          line-height: 1.2;
+
+          @media (min-width: 768px) {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+}

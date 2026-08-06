@@ -17,6 +17,8 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
 
     List<Task> findByCompleted(Boolean completed);
 
+    long countByCompleted(Boolean completed);
+
     default Page<Task> search(TaskFilterDTO filter, Pageable pageable) {
         Specification<Task> specification = (root, query, criteriaBuilder) -> {
             Predicate predicate = criteriaBuilder.conjunction();

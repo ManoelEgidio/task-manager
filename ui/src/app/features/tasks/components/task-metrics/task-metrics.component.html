@@ -1,0 +1,49 @@
+<div class="metrics-grid">
+  <mat-card class="metric-card card-total">
+    <mat-card-content class="metric-content">
+      <div class="metric-icon-bg icon-total">
+        <mat-icon>assignment</mat-icon>
+      </div>
+      <div class="metric-info">
+        <span class="metric-label">Total de Tarefas</span>
+        <span class="metric-value">{{ totalTasks() }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="metric-card card-pending">
+    <mat-card-content class="metric-content">
+      <div class="metric-icon-bg icon-pending">
+        <mat-icon>pending_actions</mat-icon>
+      </div>
+      <div class="metric-info">
+        <span class="metric-label">Pendentes</span>
+        <span class="metric-value">{{ pendingCount() }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="metric-card card-completed">
+    <mat-card-content class="metric-content">
+      <div class="metric-icon-bg icon-completed">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="metric-info">
+        <span class="metric-label">Concluídas</span>
+        <span class="metric-value">{{ completedCount() }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="metric-card card-progress">
+    <mat-card-content class="metric-content">
+      <div class="metric-icon-bg icon-progress">
+        <mat-icon>donut_large</mat-icon>
+      </div>
+      <div class="metric-info">
+        <span class="metric-label">Taxa de Conclusão</span>
+        <span class="metric-value">{{ completionPercentage() }}%</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

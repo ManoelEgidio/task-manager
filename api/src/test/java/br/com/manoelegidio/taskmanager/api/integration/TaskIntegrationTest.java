@@ -34,7 +34,6 @@ class TaskIntegrationTest {
     @Test
     @DisplayName("Deve executar o ciclo de vida completo da Tarefa (CRUD) conectando no PostgreSQL real via Testcontainers")
     void fullTaskLifecycle_OnRealPostgreSQL() {
-        // 1. Criar Tarefa via POST /api/v1/tasks
         TaskRequestDTO createRequest = new TaskRequestDTO("Testar com PostgreSQL Real", "Validação com Testcontainers", false);
         ResponseEntity<TaskResponseDTO> createResponse = restTemplate.postForEntity("/api/v1/tasks", createRequest, TaskResponseDTO.class);
 
@@ -44,14 +43,12 @@ class TaskIntegrationTest {
         assertThat(taskId).isNotNull();
         assertThat(createResponse.getBody().title()).isEqualTo("Testar com PostgreSQL Real");
 
-        // 2. Buscar Tarefa por ID via GET /api/v1/tasks/{id}
         ResponseEntity<TaskResponseDTO> getResponse = restTemplate.getForEntity("/api/v1/tasks/" + taskId, TaskResponseDTO.class);
 
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(getResponse.getBody()).isNotNull();
         assertThat(getResponse.getBody().description()).isEqualTo("Validação com Testcontainers");
 
-        // 3. Alternar Status via PATCH /api/v1/tasks/{id}/toggle
         ResponseEntity<TaskResponseDTO> toggleResponse = restTemplate.exchange(
                 "/api/v1/tasks/" + taskId + "/toggle",
                 HttpMethod.PATCH,
@@ -63,7 +60,6 @@ class TaskIntegrationTest {
         assertThat(toggleResponse.getBody()).isNotNull();
         assertThat(toggleResponse.getBody().completed()).isTrue();
 
-        // 4. Deletar Tarefa via DELETE /api/v1/tasks/{id}
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
                 "/api/v1/tasks/" + taskId,
                 HttpMethod.DELETE,
@@ -73,7 +69,6 @@ class TaskIntegrationTest {
 
         assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
-        // 5. Confirmar que a tarefa foi removida (404 Not Found)
         ResponseEntity<String> getAfterDelete = restTemplate.getForEntity("/api/v1/tasks/" + taskId, String.class);
         assertThat(getAfterDelete.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
@@ -92,5 +87,22 @@ class TaskIntegrationTest {
         assertThat(searchResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(searchResponse.getBody()).contains("Aprender Spring Boot");
         assertThat(searchResponse.getBody()).doesNotContain("Aprender Angular 20");
+    }
+
+    @Test
+    @DisplayName("Deve retornar o resumo estatístico das tarefas via GET /api/v1/tasks/summary no PostgreSQL real")
+    void getSummary_OnRealPostgreSQL() {
+        TaskRequestDTO t1 = new TaskRequestDTO("Tarefa 1 Integrada", "Descrição", true);
+        TaskRequestDTO t2 = new TaskRequestDTO("Tarefa 2 Integrada", "Descrição", false);
+
+        restTemplate.postForEntity("/api/v1/tasks", t1, TaskResponseDTO.class);
+        restTemplate.postForEntity("/api/v1/tasks", t2, TaskResponseDTO.class);
+
+        ResponseEntity<br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO> summaryResponse =
+                restTemplate.getForEntity("/api/v1/tasks/summary", br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO.class);
+
+        assertThat(summaryResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(summaryResponse.getBody()).isNotNull();
+        assertThat(summaryResponse.getBody().total()).isGreaterThanOrEqualTo(2L);
     }
 }

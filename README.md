@@ -26,7 +26,7 @@ O sistema permite criar, listar, atualizar e remover tarefas através de uma API
           │
       HTTP REST
           │
-   Spring Boot 3
+  Spring Boot 3.4.2
           │
      Service Layer
           │
@@ -47,7 +47,7 @@ H2 (Dev)    PostgreSQL (Testcontainers / Produção)
 | **Persistência** | Spring Data JPA, Hibernate |
 | **Banco (Desenvolvimento)** | H2 Database (em memória) |
 | **Banco (Integração)** | PostgreSQL 17 + Testcontainers |
-| **Frontend** | Angular 20 |
+| **Frontend** | Angular 20 (Gerenciador de Pacotes: **pnpm**) |
 | **Documentação** | OpenAPI 3 / Swagger UI |
 | **Testes** | JUnit 5, Mockito, AssertJ, MockMvc |
 | **Qualidade** | JaCoCo (**93% de Cobertura**) |
@@ -60,8 +60,8 @@ H2 (Dev)    PostgreSQL (Testcontainers / Produção)
 
 ```
 task-manager-fullstack/
-├── api/                   # Backend Spring Boot 3
-├── ui/                    # Frontend Angular 20
+├── api/                   # Backend Spring Boot 3.4.2
+├── ui/                    # Frontend Angular 20 (gerenciado via pnpm)
 ├── docker-compose.local.yml # Docker Compose Desenvolvimento (H2)
 ├── docker-compose.prod.yml  # Docker Compose Produção (PostgreSQL)
 └── README.md              # Documentação
@@ -75,7 +75,7 @@ task-manager-fullstack/
 - **Repository Pattern**
 - **Factory Pattern** (`TaskFactory`)
 - **Specification Pattern** (`JpaSpecificationExecutor`)
-- **DTO Pattern** (`TaskRequestDTO`, `TaskResponseDTO`, `TaskFilterDTO`)
+- **DTO Pattern** (`TaskRequestDTO`, `TaskResponseDTO`, `TaskFilterDTO`, `TaskSummaryDTO`)
 - **Builder Pattern** (`@Builder` Lombok)
 - **Dependency Injection** (Injeção via Construtor com `@RequiredArgsConstructor`)
 
@@ -83,10 +83,30 @@ task-manager-fullstack/
 
 # ▶️ Executando o Projeto
 
-## Desenvolvimento (Local)
+## Desenvolvimento com Docker (Recomendado)
 
 ```bash
 docker compose -f docker-compose.local.yml up --build -d
+```
+
+## Desenvolvimento Backend Manual (sem Docker)
+
+Para rodar apenas a API REST em Spring Boot (banco H2 em memória):
+
+```bash
+cd api
+./gradlew bootRun
+```
+*(No Windows: `.\gradlew.bat bootRun`)*
+
+## Desenvolvimento Frontend Manual (sem Docker)
+
+Para rodar apenas o frontend Angular usando `pnpm`:
+
+```bash
+cd ui
+pnpm install
+pnpm start
 ```
 
 ### Serviços Disponíveis
@@ -114,6 +134,7 @@ Em ambiente de produção a aplicação utiliza **PostgreSQL** configurado via v
 
 | Método | Endpoint | Descrição |
 |---------|----------|-----------|
+| `GET` | `/api/v1/tasks/summary` | Retorna o resumo estatístico (total, pendentes e concluídas) |
 | `GET` | `/api/v1/tasks` | Lista e filtra tarefas com busca dinâmica e paginação |
 | `GET` | `/api/v1/tasks/{id}` | Busca os detalhes de uma tarefa pelo ID |
 | `POST` | `/api/v1/tasks` | Cadastra uma nova tarefa |

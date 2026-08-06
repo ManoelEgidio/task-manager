@@ -1,0 +1,102 @@
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: var(--app-border-radius, 16px);
+  overflow: hidden;
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background-color: #fef2f2;
+    border-bottom: 1px solid #fee2e2;
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .icon-bubble {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background-color: #fee2e2;
+
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+          color: #dc2626;
+        }
+      }
+
+      .dialog-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #991b1b;
+        margin: 0;
+        letter-spacing: -0.02em;
+        padding: 0 !important;
+      }
+    }
+
+    .close-btn {
+      color: #991b1b;
+    }
+  }
+
+  .dialog-content {
+    padding: 1.5rem !important;
+
+    .dialog-message {
+      font-size: 0.975rem;
+      color: #334155;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem 1.5rem 1.5rem !important;
+    background-color: #ffffff;
+    border-top: 1px solid rgba(226, 232, 240, 0.8);
+    margin: 0 !important;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+
+    button {
+      height: 44px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+
+      &.cancel-button {
+        width: 100%;
+        color: #64748b;
+
+        @media (min-width: 640px) {
+          width: auto;
+        }
+      }
+
+      &.confirm-button {
+        width: 100%;
+
+        @media (min-width: 640px) {
+          width: auto;
+        }
+      }
+    }
+  }
+}

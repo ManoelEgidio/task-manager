@@ -1,0 +1,25 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-title-group">
+      <div class="icon-bubble warning">
+        <mat-icon color="warn">warning_amber</mat-icon>
+      </div>
+      <h2 mat-dialog-title class="dialog-title">{{ data.title }}</h2>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <p class="dialog-message">{{ data.message }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="cancel-button" (click)="onCancel()">{{ data.cancelText || 'Cancelar' }}</button>
+    <button mat-raised-button color="warn" class="confirm-button" (click)="onConfirm()">
+      <mat-icon>delete</mat-icon>
+      <span>{{ data.confirmText || 'Confirmar' }}</span>
+    </button>
+  </mat-dialog-actions>
+</div>

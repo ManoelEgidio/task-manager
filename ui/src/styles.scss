@@ -1,1 +1,217 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  --app-bg: #f8fafc;
+  --app-card-bg: #ffffff;
+  --app-text-primary: #0f172a;
+  --app-text-secondary: #475569;
+  --app-text-muted: #94a3b8;
+  --app-border: rgba(226, 232, 240, 0.9);
+  --app-primary: #0284c7;
+  --app-primary-hover: #0369a1;
+
+  --app-border-radius: 16px;
+  --app-button-radius: 9999px;
+
+  --app-shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  --app-shadow-md: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+  --app-shadow-lg: 0 16px 32px -8px rgba(15, 23, 42, 0.12);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--app-bg);
+  color: var(--app-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  border-radius: var(--app-button-radius) !important;
+}
+
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: var(--app-border-radius) !important;
+  --mdc-outlined-text-field-outline-color: var(--app-border) !important;
+
+  .mdc-text-field--outlined {
+    border-radius: var(--app-border-radius) !important;
+    background-color: #ffffff !important;
+
+    .mdc-notched-outline {
+      border-radius: var(--app-border-radius) !important;
+
+      .mdc-notched-outline__leading {
+        border-top-left-radius: var(--app-border-radius) !important;
+        border-bottom-left-radius: var(--app-border-radius) !important;
+        width: 16px !important;
+      }
+
+      .mdc-notched-outline__trailing {
+        border-top-right-radius: var(--app-border-radius) !important;
+        border-bottom-right-radius: var(--app-border-radius) !important;
+      }
+    }
+  }
+}
+
+.mat-mdc-select-arrow-wrapper {
+  margin-right: 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.mat-mdc-icon-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  .mat-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+}
+
+.mat-mdc-select-panel,
+.mat-mdc-menu-panel {
+  border-radius: var(--app-border-radius) !important;
+  padding: 6px !important;
+  background-color: #ffffff !important;
+  box-shadow: var(--app-shadow-lg) !important;
+  border: 1px solid var(--app-border) !important;
+}
+
+.mat-mdc-option,
+.mat-mdc-menu-item {
+  border-radius: 10px !important;
+  margin-bottom: 2px !important;
+
+  &:hover {
+    background-color: #f1f5f9 !important;
+  }
+
+  &.delete-menu-item {
+    &:hover {
+      background-color: #fef2f2 !important;
+    }
+    .delete-text {
+      color: #dc2626 !important;
+      font-weight: 600 !important;
+    }
+  }
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: var(--app-border-radius) !important;
+
+  .mdc-dialog__surface {
+    border-radius: var(--app-border-radius) !important;
+    overflow: hidden !important;
+    border: 1px solid var(--app-border) !important;
+    box-shadow: var(--app-shadow-lg) !important;
+  }
+}
+
+.app-backdrop {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.app-dialog {
+  --mdc-dialog-container-shape: var(--app-border-radius) !important;
+
+  .mat-mdc-dialog-container {
+    border-radius: var(--app-border-radius) !important;
+  }
+
+  @media (max-width: 639px) {
+    max-width: calc(100vw - 32px) !important;
+    width: 100% !important;
+    margin: 16px !important;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  margin-top: 16px !important;
+  margin-right: 16px !important;
+  --mdc-snackbar-container-shape: 9999px !important;
+
+  .mdc-snackbar__surface {
+    border-radius: 9999px !important;
+    padding: 6px 16px !important;
+    box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.18) !important;
+    border: 1px solid transparent !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    font-size: 0.925rem !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.4 !important;
+  }
+
+  .mat-mdc-snack-bar-action {
+    button {
+      font-weight: 700 !important;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.02em !important;
+      text-transform: uppercase !important;
+    }
+  }
+}
+
+.snack-bar-success {
+  .mdc-snackbar__surface {
+    background: #ecfdf5 !important;
+    border-color: #a7f3d0 !important;
+  }
+  .mat-mdc-snack-bar-label {
+    color: #047857 !important;
+  }
+  .mat-mdc-snack-bar-action button {
+    color: #059669 !important;
+  }
+}
+
+.snack-bar-error {
+  .mdc-snackbar__surface {
+    background: #fef2f2 !important;
+    border-color: #fecaca !important;
+  }
+  .mat-mdc-snack-bar-label {
+    color: #b91c1c !important;
+  }
+  .mat-mdc-snack-bar-action button {
+    color: #dc2626 !important;
+  }
+}
+
+.snack-bar-info {
+  .mdc-snackbar__surface {
+    background: #f0f9ff !important;
+    border-color: #bae6fd !important;
+  }
+  .mat-mdc-snack-bar-label {
+    color: #0369a1 !important;
+  }
+  .mat-mdc-snack-bar-action button {
+    color: #0284c7 !important;
+  }
+}
+
+.mat-mdc-card {
+  border-radius: var(--app-border-radius) !important;
+  border: 1px solid var(--app-border) !important;
+  box-shadow: var(--app-shadow-sm) !important;
+  background-color: var(--app-card-bg) !important;
+}

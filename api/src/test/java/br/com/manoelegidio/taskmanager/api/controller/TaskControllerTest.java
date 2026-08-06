@@ -51,6 +51,20 @@ class TaskControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/v1/tasks/summary deve retornar resumo estatístico com status 200 OK")
+    void getSummary_ShouldReturn200AndSummary() throws Exception {
+        br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO summary =
+                new br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO(10L, 6L, 4L);
+        when(taskService.getSummary()).thenReturn(summary);
+
+        mockMvc.perform(get("/api/v1/tasks/summary"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total").value(10))
+                .andExpect(jsonPath("$.pending").value(6))
+                .andExpect(jsonPath("$.completed").value(4));
+    }
+
+    @Test
     @DisplayName("GET /api/v1/tasks deve retornar paginação com status 200 OK")
     void search_ShouldReturn200AndPage() throws Exception {
         when(taskService.search(any(), anyInt(), anyInt(), anyString(), anyString()))

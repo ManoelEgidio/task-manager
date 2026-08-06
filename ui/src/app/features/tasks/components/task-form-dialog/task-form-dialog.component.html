@@ -1,0 +1,62 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-title-group">
+      <div class="icon-bubble" [class.edit-mode]="isEdit">
+        <mat-icon>{{ isEdit ? 'edit_note' : 'add_task' }}</mat-icon>
+      </div>
+      <h2 mat-dialog-title class="dialog-title">
+        {{ isEdit ? 'Editar Tarefa' : 'Criar Nova Tarefa' }}
+      </h2>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <form [formGroup]="form" class="task-form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Título da Tarefa</mat-label>
+        <input matInput formControlName="title" placeholder="Ex: Desenvolver nova funcionalidade" required />
+        @if (form.get('title')?.hasError('required')) {
+          <mat-error>O título da tarefa é obrigatório.</mat-error>
+        }
+        @if (form.get('title')?.hasError('minlength')) {
+          <mat-error>O título deve conter no mínimo 3 caracteres.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descrição (Opcional)</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          rows="3"
+          placeholder="Descreva detalhes, etapas ou prazos..."
+        ></textarea>
+      </mat-form-field>
+
+      @if (isEdit) {
+        <div class="checkbox-container">
+          <mat-checkbox formControlName="completed" color="primary">
+            Marcar tarefa como concluída
+          </mat-checkbox>
+        </div>
+      }
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="cancel-button" (click)="onCancel()">Cancelar</button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="submit-button"
+      [disabled]="form.invalid"
+      (click)="onSubmit()"
+    >
+      <mat-icon>{{ isEdit ? 'save' : 'check' }}</mat-icon>
+      <span>{{ isEdit ? 'Salvar Alterações' : 'Criar Tarefa' }}</span>
+    </button>
+  </mat-dialog-actions>
+</div>

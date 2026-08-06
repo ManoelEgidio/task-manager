@@ -3,6 +3,7 @@ package br.com.manoelegidio.taskmanager.api.controller;
 import br.com.manoelegidio.taskmanager.api.dto.TaskFilterDTO;
 import br.com.manoelegidio.taskmanager.api.dto.TaskRequestDTO;
 import br.com.manoelegidio.taskmanager.api.dto.TaskResponseDTO;
+import br.com.manoelegidio.taskmanager.api.dto.TaskSummaryDTO;
 import br.com.manoelegidio.taskmanager.api.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
     private final TaskService taskService;
+
+    @Operation(summary = "Obter resumo estatístico das tarefas", description = "Retorna a contagem agregada de tarefas totais, pendentes e concluídas.")
+    @GetMapping("/summary")
+    public ResponseEntity<TaskSummaryDTO> getSummary() {
+        return ResponseEntity.ok(taskService.getSummary());
+    }
 
     @Operation(summary = "Listar e filtrar tarefas", description = "Lista tarefas com suporte a paginação e filtros dinâmicos por título, descrição e status de conclusão.")
     @GetMapping

@@ -1,0 +1,56 @@
+<mat-card class="task-card-item" [class.completed]="task().completed">
+  <mat-card-content class="card-content">
+    <div class="checkbox-wrapper">
+      <button
+        type="button"
+        class="custom-check-btn"
+        [class.checked]="task().completed"
+        (click)="onToggle()"
+        matTooltip="Alternar status da tarefa"
+        [attr.aria-label]="task().completed ? 'Marcar como pendente' : 'Marcar como concluída'"
+      >
+        <mat-icon class="check-icon">check</mat-icon>
+      </button>
+    </div>
+
+    <div class="task-details">
+      <div class="task-header-row">
+        <h3 class="task-title" [class.strikethrough]="task().completed">
+          {{ task().title }}
+        </h3>
+        @if (task().completed) {
+          <span class="completed-chip">
+            <mat-icon>check_circle</mat-icon> Concluída
+          </span>
+        }
+      </div>
+      @if (task().description) {
+        <p class="task-description" [class.strikethrough]="task().completed">
+          {{ task().description }}
+        </p>
+      }
+    </div>
+
+    <div class="task-actions">
+      <button
+        mat-icon-button
+        class="dots-menu-btn"
+        [matMenuTriggerFor]="taskMenu"
+        matTooltip="Mais opções"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #taskMenu="matMenu" xPosition="before" class="task-action-menu">
+        <button mat-menu-item (click)="onEdit()">
+          <mat-icon color="primary">edit</mat-icon>
+          <span>Editar tarefa</span>
+        </button>
+        <button mat-menu-item class="delete-menu-item" (click)="onDelete()">
+          <mat-icon color="warn">delete_outline</mat-icon>
+          <span class="delete-text">Excluir tarefa</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-card-content>
+</mat-card>

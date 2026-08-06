@@ -22,10 +22,13 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.0",
+    "@angular/cdk": "^20.2.2",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
+    "@angular/material": "^20.2.2",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
     "rxjs": "~7.8.0",
@@ -44,5 +47,14 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.9.2"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract"
+    ]
   }
 }
