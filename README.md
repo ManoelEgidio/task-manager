@@ -148,7 +148,7 @@ A documentação completa e interativa está disponível no **Swagger UI**.
 
 # 🧪 Testes
 
-### Executar todos os testes e gerar relatório de cobertura JaCoCo
+### Executar os testes do Backend e relatório JaCoCo
 
 ```bash
 cd api
@@ -157,13 +157,14 @@ cd api
 
 *Caso o Docker esteja rodando, os testes de integração sobem uma instância real do **PostgreSQL 17** através do **Testcontainers**.*
 
-### Executar os testes via Docker (sem precisar de Java/Gradle instalados no host):
+### Executar os testes unitários do Frontend (Angular)
 
 ```bash
-docker compose -f docker-compose.local.yml run --rm api ./gradlew test jacocoTestReport
+cd ui
+pnpm test --watch=false
 ```
 
-O relatório visual de cobertura em HTML é gerado em:
+O relatório visual de cobertura do backend em HTML é gerado em:
 `api/build/reports/jacoco/test/html/index.html`
 
 ---
