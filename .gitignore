@@ -1,0 +1,28 @@
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Node / Angular (Frontend)
+ui/node_modules/
+ui/dist/
+ui/.angular/
+ui/npm-debug.log*
+
+# Java / Gradle (Backend)
+api/.gradle/
+api/build/
+api/out/
+api/bin/
+api/.settings/
+api/.classpath
+api/.project
+
+# Variáveis de Ambiente Confidenciais
+.env
+.env.local
+.env.production
+!.env.example

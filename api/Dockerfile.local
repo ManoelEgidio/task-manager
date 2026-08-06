@@ -1,0 +1,20 @@
+# Dockerfile.local - Desenvolvimento Local com H2 em Memória
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY gradlew gradlew.bat build.gradle settings.gradle gradle.properties ./
+COPY gradle gradle
+RUN chmod +x gradlew
+
+COPY src src
+
+# Compilar JAR no ambiente local
+RUN ./gradlew bootJar -x test -q
+
+EXPOSE 8080
+
+ENV SPRING_PROFILES_ACTIVE=local
+ENV PORT=8080
+
+ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=local -Dserver.port=${PORT:-8080} -jar /app/build/libs/*.jar"]
