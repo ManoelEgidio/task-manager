@@ -44,7 +44,7 @@ public class TaskController {
                                         @RequestParam(required = false) Boolean completed,
                                         @RequestParam(required = false, defaultValue = "0") Integer page,
                                         @RequestParam(required = false, defaultValue = "20") Integer size,
-                                        @RequestParam(required = false, defaultValue = "id") String sort,
+                                        @RequestParam(required = false, defaultValue = "createdAt") String sort,
                                         @RequestParam(required = false, defaultValue = "desc") String direction) {
 
         TaskFilterDTO filter = new TaskFilterDTO(title, description, completed);

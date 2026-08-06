@@ -42,8 +42,8 @@
       <mat-form-field appearance="outline" class="control-field select-field">
         <mat-label>Ordenar por</mat-label>
         <mat-select [value]="sortKey()" (selectionChange)="onSortChange($event.value)">
-          <mat-option value="id,desc">Mais recentes</mat-option>
-          <mat-option value="id,asc">Mais antigas</mat-option>
+          <mat-option value="createdAt,desc">Mais recentes</mat-option>
+          <mat-option value="createdAt,asc">Mais antigas</mat-option>
           <mat-option value="title,asc">Título (A-Z)</mat-option>
           <mat-option value="title,desc">Título (Z-A)</mat-option>
         </mat-select>

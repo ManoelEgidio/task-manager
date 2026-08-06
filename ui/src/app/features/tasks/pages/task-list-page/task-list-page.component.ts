@@ -52,7 +52,7 @@ export class TaskListPageComponent implements OnInit {
 
   readonly tasksList = signal<Task[]>([]);
   readonly activeFilter = signal<FilterStatus>('ALL');
-  readonly sortKey = signal<string>('id,desc');
+  readonly sortKey = signal<string>('createdAt,desc');
   readonly searchControl = new FormControl<string>('', { nonNullable: true });
 
   readonly currentPage = signal<number>(0);

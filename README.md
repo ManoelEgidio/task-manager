@@ -4,6 +4,8 @@ Aplicação Fullstack de um Gerenciador de Tarefas.
 
 O sistema permite criar, listar, atualizar e remover tarefas através de uma API REST desenvolvida com Spring Boot e consumida por uma SPA em Angular.
 
+![Demonstração do Frontend Angular]()
+
 ---
 
 ## ✨ Funcionalidades
@@ -47,12 +49,13 @@ H2 (Dev)    PostgreSQL (Testcontainers / Produção)
 | **Persistência** | Spring Data JPA, Hibernate |
 | **Banco (Desenvolvimento)** | H2 Database (em memória) |
 | **Banco (Integração)** | PostgreSQL 17 + Testcontainers |
+| **Migrações** | Flyway Migrations |
 | **Frontend** | Angular 20 (Gerenciador de Pacotes: **pnpm**) |
-| **Documentação** | OpenAPI 3 / Swagger UI |
+| **Documentação** | OpenAPI 3 / Swagger UI (Ativo em Dev, desativado em Prod por Segurança) |
 | **Testes** | JUnit 5, Mockito, AssertJ, MockMvc |
 | **Qualidade** | JaCoCo (**93% de Cobertura**) |
 | **Containers** | Docker & Docker Compose |
-| **CI** | GitHub Actions |
+| **CI/CD** | GitHub Actions & Google Cloud Run |
 
 ---
 
@@ -60,7 +63,8 @@ H2 (Dev)    PostgreSQL (Testcontainers / Produção)
 
 ```
 task-manager-fullstack/
-├── api/                   # Backend Spring Boot 3.4.2
+├── api/                   # Backend Spring Boot 3.4.2 (Java 21)
+│   └── src/main/resources/db/migration/ # Scripts de Migração SQL (Flyway)
 ├── ui/                    # Frontend Angular 20 (gerenciado via pnpm)
 ├── docker-compose.local.yml # Docker Compose Desenvolvimento (H2)
 ├── docker-compose.prod.yml  # Docker Compose Produção (PostgreSQL)
@@ -69,10 +73,13 @@ task-manager-fullstack/
 
 ---
 
-## 🎯 Padrões Utilizados
+## 🎯 Padrões & Práticas Utilizadas
 
 - **Service Layer Pattern**
 - **Repository Pattern**
+- **Database Migrations** (Flyway com `ddl-auto=validate`)
+- **Spring Data JPA Auditing** (`@CreatedDate`, `@LastModifiedDate`, `@EntityListeners`)
+- **Security Hardening** (Swagger UI habilitado apenas em `local` para navegação interativa e desativado em `prod` para proteção de superfície de ataque)
 - **Factory Pattern** (`TaskFactory`)
 - **Specification Pattern** (`JpaSpecificationExecutor`)
 - **DTO Pattern** (`TaskRequestDTO`, `TaskResponseDTO`, `TaskFilterDTO`, `TaskSummaryDTO`)
@@ -142,7 +149,9 @@ Em ambiente de produção a aplicação utiliza **PostgreSQL** configurado via v
 | `PATCH` | `/api/v1/tasks/{id}/toggle` | Alterna o status da tarefa entre concluída e pendente |
 | `DELETE` | `/api/v1/tasks/{id}` | Remove uma tarefa |
 
-A documentação completa e interativa está disponível no **Swagger UI**.
+A documentação completa e interativa está disponível no **Swagger UI** (no perfil `local`). Por razões de **Security Hardening**, a interface é desativada em produção (`prod`) para proteção da superfície de ataque da API.
+
+![Documentação OpenAPI / Swagger UI]()
 
 ---
 
@@ -167,6 +176,8 @@ pnpm test --watch=false
 O relatório visual de cobertura do backend em HTML é gerado em:
 `api/build/reports/jacoco/test/html/index.html`
 
+![Relatório de Cobertura de Testes JaCoCo]()
+
 ---
 
 # ⚙️ Integração Contínua (CI)
@@ -185,5 +196,4 @@ O **GitHub Actions** (`.github/workflows/ci.yml`) executa automaticamente a cada
 | Aplicação | URL |
 |---|---|
 | **Backend (Cloud Run)** | `` |
-| **Swagger UI (Cloud Run)** | `/swagger-ui/index.html` |
 | **Frontend** | `` |

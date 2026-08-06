@@ -47,7 +47,7 @@ class TaskControllerTest {
 
     @BeforeEach
     void setUp() {
-        sampleResponse = new TaskResponseDTO(1L, "Testar Controller", "Criar endpoints REST", false);
+        sampleResponse = new TaskResponseDTO(1L, "Testar Controller", "Criar endpoints REST", false, java.time.LocalDateTime.now(), java.time.LocalDateTime.now());
     }
 
     @Test
@@ -116,7 +116,7 @@ class TaskControllerTest {
     @DisplayName("PUT /api/v1/tasks/{id} deve atualizar tarefa e retornar 200 OK")
     void update_ShouldReturn200() throws Exception {
         TaskRequestDTO updateRequest = new TaskRequestDTO("Título Atualizado", "Descrição Atualizada", true);
-        TaskResponseDTO updatedResponse = new TaskResponseDTO(1L, "Título Atualizado", "Descrição Atualizada", true);
+        TaskResponseDTO updatedResponse = new TaskResponseDTO(1L, "Título Atualizado", "Descrição Atualizada", true, java.time.LocalDateTime.now(), java.time.LocalDateTime.now());
         when(taskService.update(eq(1L), any(TaskRequestDTO.class))).thenReturn(updatedResponse);
 
         mockMvc.perform(put("/api/v1/tasks/1")
@@ -129,7 +129,7 @@ class TaskControllerTest {
     @Test
     @DisplayName("PATCH /api/v1/tasks/{id}/toggle deve alterar status e retornar 200")
     void toggleCompleted_ShouldReturn200() throws Exception {
-        TaskResponseDTO toggled = new TaskResponseDTO(1L, "Testar Controller", "Criar endpoints REST", true);
+        TaskResponseDTO toggled = new TaskResponseDTO(1L, "Testar Controller", "Criar endpoints REST", true, java.time.LocalDateTime.now(), java.time.LocalDateTime.now());
         when(taskService.toggleCompleted(1L)).thenReturn(toggled);
 
         mockMvc.perform(patch("/api/v1/tasks/1/toggle"))

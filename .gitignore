@@ -21,8 +21,13 @@ api/.settings/
 api/.classpath
 api/.project
 
-# Variáveis de Ambiente Confidenciais
+# Variáveis de Ambiente e Chaves Confidenciais
 .env
 .env.local
 .env.production
 !.env.example
+*.json
+!ui/package.json
+!ui/tsconfig*.json
+!ui/angular.json
+

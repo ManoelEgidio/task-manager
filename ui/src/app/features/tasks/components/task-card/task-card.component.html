@@ -29,6 +29,12 @@
           {{ task().description }}
         </p>
       }
+      @if (task().createdAt) {
+        <div class="task-date-row">
+          <mat-icon>schedule</mat-icon>
+          <span>Criada em {{ task().createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      }
     </div>
 
     <div class="task-actions">
