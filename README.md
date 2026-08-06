@@ -1,10 +1,11 @@
+
 # 📝 Task Manager
 
 Aplicação Fullstack de um Gerenciador de Tarefas.
 
 O sistema permite criar, listar, atualizar e remover tarefas através de uma API REST desenvolvida com Spring Boot e consumida por uma SPA em Angular.
 
-![Demonstração do Frontend Angular]()
+<img width="1889" height="931" alt="print" src="https://github.com/user-attachments/assets/689f9903-10e4-4ba7-b19f-23be0a4281f0" />
 
 ---
 
@@ -151,7 +152,7 @@ Em ambiente de produção a aplicação utiliza **PostgreSQL** configurado via v
 
 A documentação completa e interativa está disponível no **Swagger UI** (no perfil `local`). Por razões de **Security Hardening**, a interface é desativada em produção (`prod`) para proteção da superfície de ataque da API.
 
-![Documentação OpenAPI / Swagger UI]()
+<img width="1898" height="861" alt="print-swagger" src="https://github.com/user-attachments/assets/218216d2-a73e-4ed3-be62-c2d90168a511" />
 
 ---
 
@@ -176,7 +177,7 @@ pnpm test --watch=false
 O relatório visual de cobertura do backend em HTML é gerado em:
 `api/build/reports/jacoco/test/html/index.html`
 
-![Relatório de Cobertura de Testes JaCoCo]()
+<img width="1191" height="379" alt="print-jacoco" src="https://github.com/user-attachments/assets/95db2ebb-2c17-4c85-9c6a-109e116b2995" />
 
 ---
 
