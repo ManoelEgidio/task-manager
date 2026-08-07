@@ -192,9 +192,14 @@ O **GitHub Actions** (`.github/workflows/ci.yml`) executa automaticamente a cada
 
 ---
 
-# ☁️ Deploy em Nuvem
+# ☁️ Deploy em Nuvem & Infraestrutura de Produção
 
-| Aplicação | URL |
-|---|---|
-| **Backend (Cloud Run)** | `` |
-| **Frontend** | `` |
+A arquitetura de produção foi desenhada seguindo os princípios de **infraestrutura Serverless resiliente e escalável**:
+
+- **Google Cloud Run (Serverless Compute)**: Os containers do Backend (Spring Boot) e Frontend (Angular) são executados no **Cloud Run**, uma plataforma totalmente gerenciada que realiza **autoscaling automático de zero a N instâncias sob demanda**, garantindo alta disponibilidade, zero manutenção de servidores e eficiência máxima.
+- **Neon PostgreSQL (Serverless Database)**: A persistência de dados de produção utiliza o **Neon PostgreSQL**, um banco de dados relacional gerenciado na nuvem com conexões seguras por SSL (`sslmode=require`) e gerenciamento de schema controlado via **Flyway Migrations**.
+
+| Serviço | Plataforma | URL de Produção |
+|---|---|---|
+| **Backend API** | Google Cloud Run | https://task-manager-api-726061632300.us-central1.run.app |
+| **Frontend SPA** | Google Cloud Run | https://task-manager-ui-726061632300.us-central1.run.app |
